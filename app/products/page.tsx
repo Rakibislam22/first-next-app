@@ -20,7 +20,6 @@ export default function ProductsPage() {
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("all");
 
-
     useEffect(() => {
         axios
             .get<Product[]>(`http://localhost:5000/products`)
@@ -33,10 +32,10 @@ export default function ProductsPage() {
     );
 
     return (
-        <div className="mx-auto max-w-6xl px-4 py-10 space-y-6">
+        <div className="mx-auto max-w-6xl px-4 py-10 space-y-6 text-slate-200">
             <div className="space-y-2">
-                <h1 className="text-3xl font-semibold">All Products</h1>
-                <p className="text-slate-600 text-sm">
+                <h1 className="text-3xl font-semibold text-white">All Products</h1>
+                <p className="text-slate-400 text-sm">
                     Browse all available products. Use search & filters.
                 </p>
             </div>
@@ -44,13 +43,13 @@ export default function ProductsPage() {
             {/* Search + category filter */}
             <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
                 <input
-                    className="w-full md:w-1/2 rounded-lg border px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
+                    className="w-full md:w-1/2 rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:ring-2 focus:ring-blue-500 outline-none"
                     placeholder="Search products..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                 />
                 <select
-                    className="w-full md:w-48 rounded-lg border px-3 py-2 text-sm"
+                    className="w-full md:w-48 rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-200"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                 >
@@ -62,27 +61,36 @@ export default function ProductsPage() {
 
             {/* Grid of cards */}
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {filtered.slice(0, 6).map((prod) => (
+                {filtered.map((prod) => (
                     <div
-                        key={prod.id}
-                        className="rounded-xl bg-white border shadow-sm hover:shadow-md hover:-translate-y-1 transition flex flex-col"
+                        key={prod._id}
+                        className="rounded-xl bg-slate-900 border border-slate-700 shadow-sm hover:shadow-lg hover:-translate-y-1 transition flex flex-col"
                     >
-                        <div className="h-32 bg-slate-100 rounded-t-xl overflow-hidden">
+                        <div className="h-32 bg-slate-800 rounded-t-xl overflow-hidden border-b border-slate-700">
                             {prod.imageUrl && (
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img src={prod.imageUrl} alt={prod.title} className="w-full h-full object-cover" />
+                                <img
+                                    src={prod.imageUrl}
+                                    alt={prod.title}
+                                    className="w-full h-full object-cover"
+                                />
                             )}
                         </div>
+
                         <div className="p-4 flex flex-col gap-2 flex-1">
-                            <h3 className="font-semibold text-sm line-clamp-1">{prod.title}</h3>
-                            <p className="text-xs text-slate-500 line-clamp-2">
+                            <h3 className="font-semibold text-sm text-white line-clamp-1">
+                                {prod.title}
+                            </h3>
+                            <p className="text-xs text-slate-400 line-clamp-2">
                                 {prod.shortDescription}
                             </p>
+
                             <div className="flex items-center justify-between mt-auto">
-                                <span className="text-sm font-semibold">${prod.price}</span>
+                                <span className="text-sm font-semibold text-white">
+                                    ${prod.price}
+                                </span>
                                 <Link
-                                    href={`/products/${prod.id}`}
-                                    className="text-xs px-3 py-1 rounded-full border hover:bg-slate-50"
+                                    href={`/products/${prod._id}`}
+                                    className="text-xs px-3 py-1 rounded-full border border-slate-700 hover:bg-slate-800 text-slate-300"
                                 >
                                     Details
                                 </Link>

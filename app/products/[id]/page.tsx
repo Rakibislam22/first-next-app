@@ -1,4 +1,4 @@
-import axios from "axios";
+import Link from "next/link";
 
 interface Product {
   id: string;
@@ -11,33 +11,51 @@ interface Product {
   imageUrl?: string;
 }
 
-async function getProduct(id: string): Promise<Product> {
-  const res = await axios.get<Product>(
-    `${process.env.BACKEND_URL}/products/${id}`
+async function getProduct(id: string): Promise<Product | null> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${id}`,
+    { cache: "no-store" }
   );
-  return res.data;
+
+  if (!res.ok) return null;
+
+  return res.json();
 }
 
 export default async function ProductDetailsPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const product = await getProduct(params.id);
+  const { id } = await params;
+  const product = await getProduct(id);
+
+  if (!product) {
+    return (
+      <div className="mx-auto max-w-3xl px-4 py-20 text-center text-slate-200">
+        <h1 className="text-2xl font-bold mb-4 text-white">Product Not Found</h1>
+        <Link
+          href="/products"
+          className="px-4 py-2 rounded-lg border border-slate-700 hover:bg-slate-800 inline-block text-slate-200"
+        >
+          Go Back
+        </Link>
+      </div>
+    );
+  }
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10 space-y-6">
-      <button
-        onClick={() => history.back()}
-        className="text-sm px-3 py-1 rounded-full border hover:bg-slate-50"
+    <div className="mx-auto max-w-4xl px-4 py-10 space-y-6 text-slate-200">
+      <Link
+        href="/products"
+        className="text-sm px-3 py-1 rounded-full border border-slate-700 hover:bg-slate-800 inline-block text-slate-300"
       >
         ← Back
-      </button>
+      </Link>
 
       <div className="space-y-4">
-        <div className="h-64 rounded-2xl bg-slate-100 overflow-hidden">
+        <div className="h-64 rounded-2xl bg-slate-800 overflow-hidden border border-slate-700">
           {product.imageUrl && (
-            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={product.imageUrl}
               alt={product.title}
@@ -45,17 +63,21 @@ export default async function ProductDetailsPage({
             />
           )}
         </div>
-        <h1 className="text-3xl font-semibold">{product.title}</h1>
-        <p className="text-sm text-slate-600">{product.fullDescription}</p>
+
+        <h1 className="text-3xl font-semibold text-white">{product.title}</h1>
+
+        <p className="text-sm text-slate-400">{product.fullDescription}</p>
 
         <div className="flex flex-wrap gap-4 text-sm">
-          <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 font-medium">
+          <span className="px-3 py-1 rounded-full bg-blue-900 text-blue-300 font-medium border border-blue-700">
             ${product.price}
           </span>
-          <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-600">
+
+          <span className="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
             Date: {product.date}
           </span>
-          <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700">
+
+          <span className="px-3 py-1 rounded-full bg-emerald-900 text-emerald-300 border border-emerald-700">
             Priority: {product.priority}
           </span>
         </div>
