@@ -20,7 +20,6 @@ export default function ProductsPage() {
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("all");
 
-    console.log(process.env.BACKEND_URL)
 
     useEffect(() => {
         axios
@@ -38,11 +37,11 @@ export default function ProductsPage() {
             <div className="space-y-2">
                 <h1 className="text-3xl font-semibold">All Products</h1>
                 <p className="text-slate-600 text-sm">
-                    Browse all available products. Use search & filters (UI only).
+                    Browse all available products. Use search & filters.
                 </p>
             </div>
 
-            {/* Search + category filter (UI only) */}
+            {/* Search + category filter */}
             <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
                 <input
                     className="w-full md:w-1/2 rounded-lg border px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
