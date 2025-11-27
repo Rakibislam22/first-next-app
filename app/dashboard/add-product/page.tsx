@@ -4,8 +4,10 @@ import RequireAuth from "@/components/RequireAuth";
 import { FormEvent, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function AddProductPage() {
+    const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [form, setForm] = useState({
         title: "",
@@ -26,20 +28,12 @@ export default function AddProductPage() {
         e.preventDefault();
         setLoading(true);
         try {
-            await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL}/products`, {
+            await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products`, {
                 ...form,
                 price: Number(form.price),
             });
             toast.success("Product added!");
-            setForm({
-                title: "",
-                shortDescription: "",
-                fullDescription: "",
-                price: "",
-                date: "",
-                priority: "Normal",
-                imageUrl: "",
-            });
+            router.push("/products");
         } catch (err) {
             console.error(err);
             toast.error("Failed to add product.");
@@ -50,6 +44,13 @@ export default function AddProductPage() {
 
     return (
         <RequireAuth>
+            {/*Loading overlay */}
+            {loading && (
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+                    <div className="animate-spin h-14 w-14 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+                </div>
+            )}
+
             <div className="mx-auto max-w-3xl px-4 py-10 text-slate-200">
                 <h1 className="text-2xl font-semibold mb-4 text-white">Add Product</h1>
 
@@ -57,6 +58,8 @@ export default function AddProductPage() {
                     onSubmit={handleSubmit}
                     className="bg-slate-900 border border-slate-700 rounded-2xl p-6 space-y-4 shadow-md"
                 >
+                    {/* (form stays EXACTLY the same) */}
+
                     <div className="grid md:grid-cols-2 gap-4">
                         <div className="space-y-1">
                             <label className="text-xs font-medium text-slate-300">Title</label>

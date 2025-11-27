@@ -5,6 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2"; // ✅ added
 
 interface Product {
     id: string;
@@ -20,12 +21,13 @@ interface Product {
 export default function ManageProductsPage() {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
+    const [deleting, setDeleting] = useState(false); // ✅ added
 
     async function loadProducts() {
         setLoading(true);
         try {
             const res = await axios.get<Product[]>(
-                `${process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL}/products`
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/products`
             );
             setProducts(res.data);
         } catch (err) {
@@ -37,16 +39,31 @@ export default function ManageProductsPage() {
     }
 
     async function handleDelete(id: string) {
-        if (!confirm("Delete this product?")) return;
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "This product will be deleted permanently.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!"
+        });
+
+        if (!result.isConfirmed) return;
+
+        setDeleting(true); // ✅ show deleting overlay
+
         try {
             await axios.delete(
-                `${process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL}/products/${id}`
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${id}`
             );
-            toast.success("Deleted.");
-            loadProducts();
+            toast.success("Product deleted.");
+            await loadProducts();
         } catch (err) {
             console.error(err);
-            toast.error("Failed to delete.");
+            toast.error("Failed to delete product.");
+        } finally {
+            setDeleting(false);
         }
     }
 
@@ -56,6 +73,14 @@ export default function ManageProductsPage() {
 
     return (
         <RequireAuth>
+
+            {/*FULL SCREEN LOADING OVERLAY */}
+            {(loading || deleting) && (
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+                    <div className="animate-spin h-14 w-14 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+                </div>
+            )}
+
             <div className="mx-auto max-w-5xl px-4 py-10 space-y-4 text-slate-200">
                 <h1 className="text-2xl font-semibold text-white">Manage Products</h1>
                 <p className="text-sm text-slate-400">
@@ -75,13 +100,7 @@ export default function ManageProductsPage() {
                         </thead>
 
                         <tbody>
-                            {loading ? (
-                                <tr>
-                                    <td colSpan={5} className="px-4 py-6 text-center text-slate-500">
-                                        Loading...
-                                    </td>
-                                </tr>
-                            ) : products.length === 0 ? (
+                            {!loading && products.length === 0 ? (
                                 <tr>
                                     <td colSpan={5} className="px-4 py-6 text-center text-slate-500">
                                         No products found.

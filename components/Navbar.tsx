@@ -14,7 +14,7 @@ export default function Navbar() {
 
                 {/* Logo */}
                 <Link href="/" className="font-bold text-xl text-white">
-                    NextTask<span className="text-blue-400">Shop</span>
+                    Next<span className="text-blue-400">Level</span> Shop
                 </Link>
 
                 {/* Desktop Menu */}

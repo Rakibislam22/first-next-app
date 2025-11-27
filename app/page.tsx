@@ -57,7 +57,7 @@ export default function HomePage() {
 
       {/* Section 1 – Features */}
       <section id="features" className="space-y-6">
-        <h2 className="text-2xl font-semibold text-white">Why NextTask Shop?</h2>
+        <h2 className="text-2xl font-semibold text-white">Why Next<span className="text-blue-400">Level</span> Shop Shop?</h2>
         <p className="text-slate-400 max-w-2xl">
           A modern product management tool designed for simplicity, speed, and secure access.
         </p>
@@ -151,7 +151,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer id="contact" className="border-t border-slate-700 pt-8 pb-6 text-sm text-slate-500">
         <div className="flex flex-col md:flex-row justify-between gap-4">
-          <p>© {new Date().getFullYear()} NextTask Shop. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Next<span className="text-blue-400">Level</span> Shop. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="#" className="hover:text-blue-400">Privacy</Link>
             <Link href="#" className="hover:text-blue-400">Terms</Link>
