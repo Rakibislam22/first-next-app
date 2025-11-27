@@ -2,9 +2,35 @@
 
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
+interface Product {
+  id: string;
+  title: string;
+  shortDescription: string;
+  fullDescription: string;
+  price: number;
+  date: string;
+  priority: string;
+  imageUrl?: string;
+}
 
 export default function HomePage() {
   const { data: session } = useSession();
+
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Load real products
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products`)
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data.slice(0, 3)); // show only first 3 products
+      })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className="mx-auto max-w-6xl px-4 space-y-20 text-slate-200">
@@ -19,7 +45,7 @@ export default function HomePage() {
             Organize, track, and manage products with a clean dashboard powered by Next.js and secure authentication.
           </p>
 
-          {/*Hide login buttons when logged in */}
+          {/* Hide login buttons when logged in */}
           {!session && (
             <div className="flex gap-4">
               <Link
@@ -37,7 +63,7 @@ export default function HomePage() {
             </div>
           )}
 
-          {/*If logged in, show dashboard CTA */}
+          {/* If logged in, show dashboard CTA */}
           {session && (
             <div className="flex gap-4">
               <Link
@@ -50,14 +76,20 @@ export default function HomePage() {
           )}
         </div>
 
-        <div className="rounded-2xl border border-slate-700 bg-slate-900 shadow h-64 md:h-80 flex items-center justify-center">
-          <p className="text-slate-500">Hero Illustration / Screenshot</p>
+        <div className="rounded-2xl shadow h-64 md:h-80 flex items-center justify-center">
+          <img
+            className="rounded-2xl w-full h-full object-cover"
+            src="https://plus.unsplash.com/premium_photo-1720589103335-43589b70bd20"
+            alt=""
+          />
         </div>
       </section>
 
       {/* Section 1 – Features */}
       <section id="features" className="space-y-6">
-        <h2 className="text-2xl font-semibold text-white">Why Next<span className="text-blue-400">Level</span> Shop Shop?</h2>
+        <h2 className="text-2xl font-semibold text-white">
+          Why Next<span className="text-blue-400">Level</span> Shop?
+        </h2>
         <p className="text-slate-400 max-w-2xl">
           A modern product management tool designed for simplicity, speed, and secure access.
         </p>
@@ -96,19 +128,46 @@ export default function HomePage() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="p-4 rounded-xl bg-slate-900 border border-slate-700 hover:shadow-sm transition flex flex-col gap-2"
-            >
-              <div className="h-32 rounded-lg bg-slate-800"></div>
-              <h3 className="font-semibold text-white">Featured Product {i}</h3>
-              <p className="text-xs text-slate-500">
-                A highly rated product loved by our community of buyers.
-              </p>
-              <p className="font-semibold text-white">$99</p>
-            </div>
-          ))}
+          {/* Loading Skeletons */}
+          {loading &&
+            [1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="p-4 rounded-xl bg-slate-900 border border-slate-700 animate-pulse flex flex-col gap-2"
+              >
+                <div className="h-32 rounded-lg bg-slate-800"></div>
+                <div className="h-4 bg-slate-800 rounded w-3/4"></div>
+                <div className="h-3 bg-slate-800 rounded w-1/2"></div>
+                <div className="h-4 bg-slate-800 rounded w-1/4 mt-2"></div>
+              </div>
+            ))}
+
+          {/* Real Products */}
+          {!loading &&
+            products.map((prod) => (
+              <div
+                key={prod.id}
+                className="p-4 rounded-xl bg-slate-900 border border-slate-700 hover:shadow-sm transition flex flex-col gap-2"
+              >
+                <div className="h-32 rounded-lg bg-slate-800 overflow-hidden">
+                  {prod.imageUrl && (
+                    <img
+                      src={prod.imageUrl}
+                      alt={prod.title}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                </div>
+
+                <h3 className="font-semibold text-white line-clamp-1">{prod.title}</h3>
+
+                <p className="text-xs text-slate-500 line-clamp-2">
+                  {prod.shortDescription}
+                </p>
+
+                <p className="font-semibold text-white">${prod.price}</p>
+              </div>
+            ))}
         </div>
       </section>
 
@@ -119,7 +178,7 @@ export default function HomePage() {
           {[
             "Managing inventory has never been easier.",
             "Clean interface and easy product updates.",
-            "Perfect tool for small sellers like me."
+            "Perfect tool for small sellers like me.",
           ].map((text, i) => (
             <div key={i} className="p-5 rounded-xl bg-slate-900 border border-slate-700">
               <p className="text-sm text-slate-400 mb-3">“{text}”</p>
@@ -149,13 +208,25 @@ export default function HomePage() {
       )}
 
       {/* Footer */}
-      <footer id="contact" className="border-t border-slate-700 pt-8 pb-6 text-sm text-slate-500">
+      <footer
+        id="contact"
+        className="border-t border-slate-700 pt-8 pb-6 text-sm text-slate-500"
+      >
         <div className="flex flex-col md:flex-row justify-between gap-4">
-          <p>© {new Date().getFullYear()} Next<span className="text-blue-400">Level</span> Shop. All rights reserved.</p>
+          <p>
+            © {new Date().getFullYear()} Next<span className="text-blue-400">Level</span>{" "}
+            Shop. All rights reserved.
+          </p>
           <div className="flex gap-4">
-            <Link href="#" className="hover:text-blue-400">Privacy</Link>
-            <Link href="#" className="hover:text-blue-400">Terms</Link>
-            <Link href="#" className="hover:text-blue-400">GitHub</Link>
+            <Link href="#" className="hover:text-blue-400">
+              Privacy
+            </Link>
+            <Link href="#" className="hover:text-blue-400">
+              Terms
+            </Link>
+            <Link href="#" className="hover:text-blue-400">
+              GitHub
+            </Link>
           </div>
         </div>
       </footer>
