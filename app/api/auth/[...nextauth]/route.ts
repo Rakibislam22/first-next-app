@@ -19,7 +19,6 @@ export const authOptions = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
-        // CALL BACKEND LOGIN API
         const res = await fetch("https://next-server-ashy.vercel.app/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -31,7 +30,6 @@ export const authOptions = {
 
         const user = await res.json();
 
-        // If backend returned success
         if (res.ok && user?._id) {
           return {
             id: user._id,
@@ -48,11 +46,6 @@ export const authOptions = {
   pages: {
     signIn: "/login",
   },
-
-  session: {
-    strategy: "jwt",
-  },
-
 };
 
 const handler = NextAuth(authOptions);
