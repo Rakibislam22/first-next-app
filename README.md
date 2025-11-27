@@ -1,36 +1,175 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# **NextLevel Shop – Full Stack Product Management App**
 
-## Getting Started
+A modern full-stack **Next.js + Express.js + MongoDB** application for managing products with secure authentication, product creation, deletion, and dynamic UI powered by the Next.js App Router.
 
-First, run the development server:
+Designed for **speed, clarity, and security**, with a responsive UI and real-time backend API.
 
+---
+
+# 🚀 Features
+
+* 🔐 **User Authentication** (Register + Login)
+* 📦 **Add / View / Delete Products**
+* 🗂 **Product Filtering & Search**
+* 🎨 **Modern UI** with TailwindCSS + Custom Loading Screens
+* ⚙ **Backend API (Express.js + MongoDB)**
+* 🌐 **Fully Deployable** on Vercel 
+
+---
+
+# 🛠 **Tech Stack**
+
+### **Frontend**
+
+* Next.js (App Router)
+* TypeScript
+* TailwindCSS
+* NextAuth
+* Axios
+
+### **Backend**
+
+* Express.js
+* MongoDB (Atlas)
+* bcryptjs
+* CORS
+
+---
+
+# 📥 **Setup & Installation Instructions**
+
+## **1️⃣ Clone the Repository**
+Frontend:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Rakibislam22/first-next-app.git
+```
+Backend:
+```bash
+git clone https://github.com/Rakibislam22/next-server.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## **2️⃣ Install Dependencies**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Frontend (Next.js)
 
-## Learn More
+```bash
+cd first-next-app
+npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Backend (Express)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+cd next-server
+npm install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## **3️⃣ Environment Variables**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Frontend – create `.env.local`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+NEXT_PUBLIC_BACKEND_URL=https://your-backend-url.com
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=anything-long-random
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+```
+
+### Backend – create `.env`
+
+```
+MONGO_URI=YOUR_MONGODB_ATLAS_URI
+FRONTEND_URL=http://localhost:3000
+PORT=5000
+```
+
+---
+
+## **4️⃣ Run the App Locally**
+
+### Start backend:
+
+```bash
+cd next-server
+node index.js
+```
+
+### Start frontend:
+
+```bash
+cd first-next-app
+npm run dev
+```
+
+Now open:
+
+👉 **[http://localhost:3000](http://localhost:3000)**
+
+---
+
+# 🧭 **API Route Summary (Backend)**
+
+### **Auth Routes**
+
+| Method | Route       | Description                     |
+| ------ | ----------- | ------------------------------- |
+| POST   | `/register` | Register new user               |
+| POST   | `/login`    | Login user and return user data |
+
+---
+
+### **Product Routes**
+
+| Method | Route           | Description        |
+| ------ | --------------- | ------------------ |
+| GET    | `/products`     | Get all products   |
+| GET    | `/products/:id` | Get single product |
+| POST   | `/products`     | Create new product |
+| DELETE | `/products/:id` | Delete product     |
+
+---
+
+# 🧭 **Frontend Route Summary (Next.js)**
+
+| Page                    | Route                        | Description          |
+| ----------------------- | ---------------------------- | -------------------- |
+| Home                    | `/`                          | Landing page         |
+| Products                | `/products`                  | All products list    |
+| Product Details         | `/products/[id]`             | View single product  |
+| Login                   | `/login`                     | User login           |
+| Register                | `/register`                  | User registration    |
+| Dashboard → Manage      | `/dashboard/manage-products` | View/delete products |
+| Dashboard → Add Product | `/dashboard/add-product`     | Create a new product |
+
+---
+
+# 🏁 Deployment Guide
+
+### **Frontend → Vercel**
+
+* Import GitHub repo into Vercel
+* Add environment variables inside project settings
+* Deploy with 1 click
+
+### **Backend → Vercel/Render / Railway**
+
+* Create new Web Service
+* Add environment variables
+* Must use:
+
+  ```js
+  const PORT = process.env.PORT || 5000;
+  ```
+* Deploy & add the backend URL to frontend env
+
+---
+
+# ✔ License
+
+This project is open-source. Feel free to modify and improve.
+
