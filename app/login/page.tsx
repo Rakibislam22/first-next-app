@@ -10,10 +10,37 @@ export default function LoginPage() {
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isRegister, setIsRegister] = useState(false);
 
-    async function handleCredentialsLogin(e: FormEvent) {
+    async function handleSubmit(e: FormEvent) {
         e.preventDefault();
         setLoading(true);
+
+        // ✅ REGISTER FLOW
+        if (isRegister) {
+            const res = await fetch("http://localhost:5000/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: email.split("@")[0],
+                    email,
+                    password,
+                }),
+            });
+
+            setLoading(false);
+
+            if (!res.ok) {
+                toast.error("User already exists.");
+                return;
+            }
+
+            toast.success("Registered! Now login.");
+            setIsRegister(false);
+            return;
+        }
+
+        // ✅ LOGIN FLOW (NextAuth credentials)
         const res = await signIn("credentials", {
             redirect: false,
             email,
@@ -23,7 +50,7 @@ export default function LoginPage() {
         setLoading(false);
 
         if (res?.error) {
-            toast.error("Invalid email or password (password must be 123456).");
+            toast.error("Invalid email or password.");
         } else {
             toast.success("Logged in!");
             router.push("/");
@@ -38,11 +65,8 @@ export default function LoginPage() {
         <div className="min-h-[70vh] flex items-center justify-center px-4 text-slate-200">
             <div className="w-full max-w-md bg-slate-900 border border-slate-700 rounded-2xl shadow p-6 space-y-6">
                 <h1 className="text-2xl font-semibold text-center mb-2 text-white">
-                    Login / Register
+                    {isRegister ? "Create Account" : "Login"}
                 </h1>
-                <p className="text-xs text-center text-slate-400">
-                    Use Google login or demo credentials (any email, password: <b>123456</b>).
-                </p>
 
                 <button
                     onClick={handleGoogleLogin}
@@ -57,7 +81,7 @@ export default function LoginPage() {
                     <div className="flex-1 h-px bg-slate-700" />
                 </div>
 
-                <form onSubmit={handleCredentialsLogin} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-1">
                         <label className="text-xs font-medium text-slate-300">Email</label>
                         <input
@@ -66,7 +90,7 @@ export default function LoginPage() {
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="demo@example.com"
+                            placeholder="you@example.com"
                         />
                     </div>
 
@@ -78,7 +102,7 @@ export default function LoginPage() {
                             required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            placeholder="123456"
+                            placeholder="••••••"
                         />
                     </div>
 
@@ -86,9 +110,24 @@ export default function LoginPage() {
                         disabled={loading}
                         className="w-full py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-500 disabled:opacity-60"
                     >
-                        {loading ? "Logging in..." : "Login"}
+                        {loading
+                            ? isRegister
+                                ? "Registering..."
+                                : "Logging in..."
+                            : isRegister
+                                ? "Register"
+                                : "Login"}
                     </button>
                 </form>
+
+                <button
+                    className="text-xs text-blue-400 underline w-full text-center mt-2"
+                    onClick={() => setIsRegister(!isRegister)}
+                >
+                    {isRegister
+                        ? "Already have an account? Login"
+                        : "Don't have an account? Register"}
+                </button>
             </div>
         </div>
     );
