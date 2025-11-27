@@ -23,7 +23,7 @@ export default function ProductsPage() {
 
     useEffect(() => {
         axios
-            .get<Product[]>(`http://localhost:5000/products`)
+            .get<Product[]>(`https://next-server-ashy.vercel.app/products`)
             .then((res) => setProducts(res.data))
             .catch(console.error)
             .finally(() => setLoading(false)); // ✅ loading ends
@@ -79,7 +79,7 @@ export default function ProductsPage() {
                                 key={prod._id}
                                 className="rounded-xl bg-slate-900 border border-slate-700 shadow-sm hover:shadow-lg hover:-translate-y-1 transition flex flex-col"
                             >
-                                <div className="h-32 bg-slate-800 rounded-t-xl overflow-hidden border-b border-slate-700">
+                                <div className="h-40 bg-slate-800 rounded-t-xl overflow-hidden border-b border-slate-700">
                                     {prod.imageUrl && (
                                         <img
                                             src={prod.imageUrl}
@@ -90,20 +90,20 @@ export default function ProductsPage() {
                                 </div>
 
                                 <div className="p-4 flex flex-col gap-2 flex-1">
-                                    <h3 className="font-semibold text-sm text-white line-clamp-1">
+                                    <h3 className="font-semibold text-xl text-white line-clamp-1">
                                         {prod.title}
                                     </h3>
-                                    <p className="text-xs text-slate-400 line-clamp-2">
+                                    <p className="text-sm text-slate-400 line-clamp-2">
                                         {prod.shortDescription}
                                     </p>
 
                                     <div className="flex items-center justify-between mt-auto">
-                                        <span className="text-sm font-semibold text-white">
+                                        <span className="text-lg font-semibold text-white">
                                             ${prod.price}
                                         </span>
                                         <Link
                                             href={`/products/${prod._id}`}
-                                            className="text-xs px-3 py-1 rounded-full border border-slate-700 hover:bg-slate-800 text-slate-300"
+                                            className="text-sm px-3 py-1 rounded-full border border-blue-600 hover:bg-blue-600 text-slate-300"
                                         >
                                             Details
                                         </Link>

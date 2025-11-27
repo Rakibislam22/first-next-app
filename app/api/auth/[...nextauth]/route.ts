@@ -6,7 +6,7 @@ export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "", // ✅ FIXED TYPO
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     }),
 
     CredentialsProvider({
@@ -19,8 +19,8 @@ export const authOptions = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
-        // ✅ CALL BACKEND LOGIN API
-        const res = await fetch("http://localhost:5000/login", {
+        // CALL BACKEND LOGIN API
+        const res = await fetch("https://next-server-ashy.vercel.app/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -31,7 +31,7 @@ export const authOptions = {
 
         const user = await res.json();
 
-        // ✅ If backend returned success
+        // If backend returned success
         if (res.ok && user?._id) {
           return {
             id: user._id,

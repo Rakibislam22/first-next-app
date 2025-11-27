@@ -54,7 +54,7 @@ export default async function ProductDetailsPage({
       </Link>
 
       <div className="space-y-4">
-        <div className="h-64 rounded-2xl bg-slate-800 overflow-hidden border border-slate-700">
+        <div className="h-100 rounded-2xl bg-slate-800 overflow-hidden border border-slate-700">
           {product.imageUrl && (
             <img
               src={product.imageUrl}
