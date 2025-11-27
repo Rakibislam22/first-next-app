@@ -6,6 +6,7 @@ import Link from "next/link";
 
 interface Product {
     id: string;
+    _id: string;
     title: string;
     shortDescription: string;
     fullDescription: string;

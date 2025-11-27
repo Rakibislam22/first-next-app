@@ -9,6 +9,7 @@ import Swal from "sweetalert2"; // ✅ added
 
 interface Product {
     id: string;
+    _id: string;
     title: string;
     shortDescription: string;
     fullDescription: string;
