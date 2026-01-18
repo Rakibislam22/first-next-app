@@ -10,7 +10,7 @@ export default function Navbar() {
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur border-b border-slate-700">
-            <nav className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between text-slate-200">
+            <nav className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between text-slate-200">
 
                 {/* Logo */}
                 <Link href="/" className="font-bold text-xl text-white">
