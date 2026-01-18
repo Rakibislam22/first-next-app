@@ -1,5 +1,6 @@
 "use client";
 
+import Footer from "@/components/Footer";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -129,7 +130,49 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Section 2 – Items preview */}
+        {/* Section 2 – How It Works */}
+        <section id="how-it-works" className="space-y-6">
+          <h2 className="text-2xl font-semibold text-white">
+            How It <span className="text-blue-400">Works</span>
+          </h2>
+          <p className="text-slate-400 max-w-2xl">
+            Get started with NextLevel Shop in just a few simple steps.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="p-5 rounded-xl bg-slate-900 border border-slate-700 shadow-sm hover:-translate-y-1 hover:shadow-md transition">
+              <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-lg mb-4">
+                1
+              </div>
+              <h3 className="font-semibold mb-2 text-white">Sign Up & Login</h3>
+              <p className="text-sm text-slate-400">
+                Create your account or login securely using our authentication system.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-slate-900 border border-slate-700 shadow-sm hover:-translate-y-1 hover:shadow-md transition">
+              <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-lg mb-4">
+                2
+              </div>
+              <h3 className="font-semibold mb-2 text-white">Add Your Products</h3>
+              <p className="text-sm text-slate-400">
+                Upload product details, images, and prices through the dashboard.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-slate-900 border border-slate-700 shadow-sm hover:-translate-y-1 hover:shadow-md transition">
+              <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-lg mb-4">
+                3
+              </div>
+              <h3 className="font-semibold mb-2 text-white">Manage & Organize</h3>
+              <p className="text-sm text-slate-400">
+                Keep track of your inventory and update products anytime, anywhere.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 3 – Items preview */}
         <section className="space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-semibold text-white">Popular Products</h2>
@@ -194,7 +237,76 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Section 3 – Testimonials */}
+        {/* Section 4 – Statistics */}
+        <section id="statistics" className="space-y-6">
+          <h2 className="text-2xl font-semibold text-white">
+            Trusted by <span className="text-blue-400">Thousands</span>
+          </h2>
+          <p className="text-slate-400 max-w-2xl">
+            Join a growing community of sellers who rely on NextLevel Shop for their business.
+          </p>
+
+          <div className="grid md:grid-cols-4 gap-6">
+            <div className="p-6 rounded-xl bg-slate-900 border border-slate-700 text-center">
+              <div className="text-3xl font-bold text-blue-400 mb-2">10K+</div>
+              <p className="text-sm text-slate-400">Active Products</p>
+            </div>
+            <div className="p-6 rounded-xl bg-slate-900 border border-slate-700 text-center">
+              <div className="text-3xl font-bold text-blue-400 mb-2">5K+</div>
+              <p className="text-sm text-slate-400">Happy Sellers</p>
+            </div>
+            <div className="p-6 rounded-xl bg-slate-900 border border-slate-700 text-center">
+              <div className="text-3xl font-bold text-blue-400 mb-2">99%</div>
+              <p className="text-sm text-slate-400">Uptime</p>
+            </div>
+            <div className="p-6 rounded-xl bg-slate-900 border border-slate-700 text-center">
+              <div className="text-3xl font-bold text-blue-400 mb-2">24/7</div>
+              <p className="text-sm text-slate-400">Support</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 5 – Benefits */}
+        <section id="benefits" className="space-y-6">
+          <h2 className="text-2xl font-semibold text-white">
+            Key <span className="text-blue-400">Benefits</span>
+          </h2>
+          <p className="text-slate-400 max-w-2xl">
+            Discover what makes NextLevel Shop the perfect choice for your product management needs.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="p-6 rounded-xl bg-slate-900 border border-slate-700 hover:border-blue-600 transition">
+              <h3 className="font-semibold text-lg mb-2 text-white">Easy Product Management</h3>
+              <p className="text-sm text-slate-400">
+                Add, edit, and organize your products with an intuitive interface that requires no technical knowledge.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl bg-slate-900 border border-slate-700 hover:border-blue-600 transition">
+              <h3 className="font-semibold text-lg mb-2 text-white">Real-time Updates</h3>
+              <p className="text-sm text-slate-400">
+                Changes reflect instantly across your store, keeping your inventory always up-to-date.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl bg-slate-900 border border-slate-700 hover:border-blue-600 transition">
+              <h3 className="font-semibold text-lg mb-2 text-white">Secure & Reliable</h3>
+              <p className="text-sm text-slate-400">
+                Your data is protected with industry-standard security measures and regular backups.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl bg-slate-900 border border-slate-700 hover:border-blue-600 transition">
+              <h3 className="font-semibold text-lg mb-2 text-white">Scalable Solution</h3>
+              <p className="text-sm text-slate-400">
+                Whether you have 10 or 10,000 products, our platform grows with your business needs.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 6 – Testimonials */}
         <section id="testimonials" className="space-y-6">
           <h2 className="text-2xl font-semibold text-white">What Users Say</h2>
           <div className="grid md:grid-cols-3 gap-6">
@@ -212,7 +324,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Section 4 – Banner */}
+        {/* Section 7 – Banner */}
         {!session && (
           <section className="rounded-2xl border border-blue-700 bg-blue-700 text-white p-8 flex flex-col md:flex-row items-center justify-between gap-4">
             <div>
@@ -231,28 +343,7 @@ export default function HomePage() {
         )}
 
         {/* Footer */}
-        <footer
-          id="contact"
-          className="border-t border-slate-700 pt-8 pb-6 text-sm text-slate-500"
-        >
-          <div className="flex flex-col md:flex-row justify-between gap-4">
-            <p>
-              © {new Date().getFullYear()} Next<span className="text-blue-400">Level</span>{" "}
-              Shop. All rights reserved.
-            </p>
-            <div className="flex gap-4">
-              <Link href="#" className="hover:text-blue-400">
-                Privacy
-              </Link>
-              <Link href="#" className="hover:text-blue-400">
-                Terms
-              </Link>
-              <Link href="#" className="hover:text-blue-400">
-                GitHub
-              </Link>
-            </div>
-          </div>
-        </footer>
+        <Footer></Footer>
       </div>
     </>
   );
