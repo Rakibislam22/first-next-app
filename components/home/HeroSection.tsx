@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Image from "next/image";
 import HeroCTA from "./HeroCTA";
 
 export default function HeroSection() {
@@ -15,11 +15,14 @@ export default function HeroSection() {
         <HeroCTA />
       </div>
 
-      <div className="rounded-2xl shadow h-64 md:h-80 flex items-center justify-center">
-        <img
-          className="rounded-2xl w-full h-full object-cover"
+      <div className="rounded-2xl shadow h-64 md:h-80 relative overflow-hidden">
+        <Image
           src="https://plus.unsplash.com/premium_photo-1720589103335-43589b70bd20"
-          alt=""
+          alt="Product management dashboard"
+          fill
+          className="rounded-2xl object-cover"
+          sizes="(max-width: 768px) 100vw, 50vw"
+          priority
         />
       </div>
     </section>

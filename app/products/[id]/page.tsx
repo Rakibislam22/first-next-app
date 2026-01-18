@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Product {
   id: string;
@@ -56,12 +57,15 @@ export default async function ProductDetailsPage({
         </Link>
 
         <div className="space-y-4">
-          <div className="h-100 rounded-2xl bg-slate-800 overflow-hidden border border-slate-700">
+          <div className="relative h-96 rounded-2xl bg-slate-800 overflow-hidden border border-slate-700">
             {product.imageUrl && (
-              <img
+              <Image
                 src={product.imageUrl}
                 alt={product.title}
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 80vw"
+                priority
               />
             )}
           </div>

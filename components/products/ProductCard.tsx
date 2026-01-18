@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 interface Product {
   id: string;
@@ -16,12 +17,14 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="rounded-xl bg-slate-900 border border-slate-700 shadow-sm hover:shadow-lg hover:-translate-y-1 transition flex flex-col">
-      <div className="h-40 bg-slate-800 rounded-t-xl overflow-hidden border-b border-slate-700">
+      <div className="h-40 bg-slate-800 rounded-t-xl overflow-hidden border-b border-slate-700 relative">
         {product.imageUrl && (
-          <img
+          <Image
             src={product.imageUrl}
             alt={product.title}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         )}
       </div>

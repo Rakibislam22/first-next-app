@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 interface Product {
@@ -58,12 +59,14 @@ export default function PopularProducts() {
               key={prod.id}
               className="p-4 rounded-xl bg-slate-900 border border-slate-700 hover:shadow-sm transition flex flex-col gap-2"
             >
-              <div className="h-40 rounded-lg bg-slate-800 overflow-hidden">
+              <div className="h-40 rounded-lg bg-slate-800 overflow-hidden relative">
                 {prod.imageUrl && (
-                  <img
+                  <Image
                     src={prod.imageUrl}
                     alt={prod.title}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 )}
               </div>
